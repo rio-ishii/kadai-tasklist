@@ -37,12 +37,17 @@ class TasksController extends Controller
             ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-   
+
+    public function store(Request $request)
+    {
+        // メッセージを作成
+        $task = new Task;
+        $task->content = $request->content;
+        $task->save();
+
+        // トップページへリダイレクトさせる
+        return redirect('/');
+    }
     /**
      * Display the specified resource.
      *
