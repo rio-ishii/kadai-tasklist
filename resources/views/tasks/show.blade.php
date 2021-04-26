@@ -16,7 +16,7 @@
         </tr>
          <tr>
             <th>status</th>
-            <td>{{ $task->text }}</td>
+            <td>{{ $task->status }}</td>
         </tr>
     </table>
 
