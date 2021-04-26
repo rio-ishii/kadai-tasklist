@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+    
 <!-- ここにページ毎のコンテンツを書く -->
  <h1>作成ページ</h1>
 
