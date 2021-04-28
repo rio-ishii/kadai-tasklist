@@ -39,6 +39,6 @@ class User extends Authenticatable
     
      public function tasks()
     {
-        return $this->hasMany(Micropost::class);
+        return $this->hasMany(Task::class);
     }
 }
