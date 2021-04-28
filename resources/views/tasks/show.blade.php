@@ -26,5 +26,12 @@
     {!! Form::model($task, ['route' => ['tasks.destroy', $task->id], 'method' => 'delete']) !!}
         {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
+    
+     @if (Auth::id() == $user->id)
+                {{-- 投稿フォーム --}}
+                @include('tasks.form')
+            @endif
+            {{-- 投稿一覧 --}}
+            @include('tasks.tasks')
 
 @endsection

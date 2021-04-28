@@ -15,12 +15,24 @@ class TasksController extends Controller
      */
     public function index()
     {
-        //
-        $tasks = Task::all();
-        return view('tasks.index',[
-            'tasks'=> $tasks,
-            
-            ]);
+        
+        $data = [];
+        if (\Auth::check()) { // 認証済みの場合
+            // 認証済みユーザを取得
+            $user = \Auth::user();
+            // ユーザの投稿の一覧を作成日時の降順で取得
+            // （後のChapterで他ユーザの投稿も取得するように変更しますが、現時点ではこのユーザの投稿のみ取得します）
+            $tasks = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);
+
+            $data = [
+                'user' => $user,
+                'microposts' => $tasks,
+            ];
+        }
+
+        // Welcomeビューでそれらを表示
+        return view('welcome', $data);
+        }
     }
 
     /**
@@ -53,8 +65,13 @@ class TasksController extends Controller
         $task->status = $request->status;
         $task->save();
 
-    
-        return redirect('/');
+        // 認証済みユーザ（閲覧者）の投稿として作成（リクエストされた値をもとに作成）
+        $request->user()->tasks()->create([
+            'content' => $request->content,
+        ]);
+
+        // 前のURLへリダイレクトさせる
+        return back();
     }
     /**
      * Display the specified resource.
@@ -122,9 +139,12 @@ class TasksController extends Controller
         
         $task = Task::findOrFail($id);
       
-        $task->delete();
+       // 認証済みユーザ（閲覧者）がその投稿の所有者である場合は、投稿を削除
+        if (\Auth::id() === $task->user_id) {
+            $task->delete();
+        }
 
-       
-        return redirect('/');
+        // 前のURLへリダイレクトさせる
+        return back();
     }
 }
