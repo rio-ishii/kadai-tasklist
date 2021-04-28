@@ -7,7 +7,7 @@
                 {{-- 投稿フォーム --}}
                 @include('tasks.form')
                 {{-- 投稿一覧 --}}
-                @include('tasks.tasks')
+                @include('tasks.tasklist')
             </div>
         </div>
     @else
