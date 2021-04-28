@@ -1,16 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (Auth::check())
-        <div class="row">
-            <div class="col-sm-8">
-                {{-- 投稿フォーム --}}
-                @include('tasks.form')
-                {{-- 投稿一覧 --}}
-                @include('tasks.tasklist')
-            </div>
-        </div>
-    @else
         <div class="center jumbotron">
             <div class="text-center">
                 <h1>Welcome to the Tasklist</h1>
