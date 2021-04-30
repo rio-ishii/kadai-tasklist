@@ -14,10 +14,11 @@
             <th>タスク</th>
             <td>{{ $task->content }}</td>
         </tr>
-         <tr>
+        <tr>
             <th>status</th>
             <td>{{ $task->status }}</td>
         </tr>
+        
     </table>
 
     {!! link_to_route('tasks.edit', 'このタスクを編集', ['task' => $task->id], ['class' => 'btn btn-light']) !!}
@@ -27,11 +28,11 @@
         {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
     
-     @if (Auth::id() == $user->id)
+    {{-- @if (Auth::id() == $user->id)
                 {{-- 投稿フォーム --}}
-                @include('tasks.form')
+                {{--@include('tasks.form')
             @endif
             {{-- 投稿一覧 --}}
-            @include('tasks.tasks')
+         {{--   @include('tasks.tasks')--}}
 
 @endsection
