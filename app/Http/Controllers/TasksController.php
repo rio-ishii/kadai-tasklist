@@ -113,12 +113,15 @@ class TasksController extends Controller
     public function show($id)
     {
         $task = Task::findOrFail($id);
-
+        
+        if (\Auth::id() === $task->user_id) {
         
         return view('tasks.show', [
             'task' => $task,
         ]);
         //
+    }
+        return redirect ('/');
     }
 
     /**
@@ -130,11 +133,15 @@ class TasksController extends Controller
     public function edit($id)
     {
         $task = Task::findOrFail($id);
+        
+        if (\Auth::id() === $task->user_id) {
 
        
         return view('tasks.edit', [
             'task' => $task,
         ]);
+    }
+        return redirect ('/');
     }
 
     /**
@@ -146,16 +153,19 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
+            
         $request->validate([
             'content' => 'required',
             'status' => 'required|max:10',
             ]);
         $task = Task::findOrFail($id);
         
+        if (\Auth::id() === $task->user_id) {
+        
         $task->content = $request->content;
         $task->status = $request->status;
         $task->save();
-
+    }
 
         return redirect('/');
     }
@@ -171,10 +181,10 @@ class TasksController extends Controller
         $task = \App\Task::findOrFail($id);
       
        // 認証済みユーザ（閲覧者）がその投稿の所有者である場合は、投稿を削除
-        //if (\Auth::id() === $task->user_id) {
-          //  $task->delete();
-       // }
-        $task->delete();
+        if (\Auth::id() === $task->user_id) {
+            $task->delete();
+        }
+        //$task->delete();
         
         return redirect('/');
 
