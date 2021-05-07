@@ -87,17 +87,17 @@ class TasksController extends Controller
             ]);
             
             
-        $task = new Task;
-        $task->user_id = $request->user()->id;
-        $task->content = $request->content;
-        $task->status = $request->status;
-        $task->save();
+        //$task = new Task;
+        //$task->user_id = $request->user()->id;
+        //$task->content = $request->content;
+        //$task->status = $request->status;
+        //$task->save();
 
         // 認証済みユーザ（閲覧者）の投稿として作成（リクエストされた値をもとに作成）
-        //$request->user()->tasks()->create([
-            //'content' => $request->content,
-            //'status' => $request->status,
-        //]);
+        $request->user()->tasks()->create([
+            'content' => $request->content,
+            'status' => $request->status,
+        ]);
         
         return redirect('/');
 
